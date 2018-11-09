@@ -1,0 +1,17 @@
+1. Установка приложения(вручную или с github)
+
+2. Настройка запуска юнита gunicorn через systemd(sudo nano /etc/systemd/system/arthas.service
+
+                                                                                                                                                                                      sudo systemctl start arthas
+
+                                                                                                                                                                                      sudo systemctl enable arthas
+
+3. Сгенерировать openssl ключ для https: $ mkdir certs
+
+$ openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+
+  -keyout certs/key.pem -out certs/cert.pem                                                                                                                                                                               
+
+4. Настройка nginx(заменяем конфигурацию на terenas, и в файле,на директорию выше nginx.cong ставим worker_connections 2049;
+
+                                                                           sudo service nginx restart)    

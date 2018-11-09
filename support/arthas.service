@@ -1,0 +1,14 @@
+[Unit]
+Description=Gnicorn instance to serve arthas app
+After=network.target
+
+[Service]
+User=pollux
+WorkingDirectory=/home/pollux/test/terenas
+Environment="PATH=/home/pollux/test/terenas/myvenv/bin"
+ExecStart=/home/pollux/test/terenas/myvenv/bin/gunicorn --workers 4  frostmourne:app
+
+[Install]
+WantedBy=multi-user.target
+
+
