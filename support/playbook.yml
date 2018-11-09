@@ -1,10 +1,28 @@
     ---
     - hosts: all
       tasks:
+      
+        - name: copy web app to server
+          copy:
+            src:  /home/pollux/test/terenas
+            dest: /home/user/ 
+            
         - name: install python packages
           pip:
             requirements : terenas/req.txt
+            virtualenv: /terenas/venv
             
+        - name: copy systemd unit to units dir
+          copy:
+            src:  /home/pollux/test/arthas.service
+            dest: /etc/systemd/system/arthas.service
+            become: yes    
+
+        - name: start and enable new service
+          command: systemctl start arthas
+          command: systemctl enable arthas
+          become: yes  
+        
         - name: ensure nginx is at the latest version
           apt: name=nginx state=latest
           become: yes
@@ -34,14 +52,3 @@
             name: nginx
             state: restarted
           become: yes
-          
-        - name: copy web app to server
-          copy:
-            src:  /home/pollux/terenas
-            dest: /home/user/  
-              
-        - name: copy systemd unit to units dir
-          copy:
-            src:  /home/pollux/test/arthas.service
-            dest: /etc/systemd/system/arthas.service
-            become: yes
